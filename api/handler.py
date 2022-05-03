@@ -2,7 +2,6 @@ import requests
 import json
 import os
 
-
 BASEURL = "https://sxcu.net/api/"
 
 def getAllDomains():
@@ -36,14 +35,16 @@ def checkSub(domain):
 def checkSubPublic(domain):
     return requests.get(BASEURL + "subdomains/" + domain).json()["public"]
 
-def upload(domain, filePath, token=""):
+def uploadHandler(domain, filePath, token=""):
+
+    print(domain)
+    print(filePath)
 
     props = {
         "discord_hide_url": False
 	}
 
-    response = requests.post(domain + "files/create", files={"file": open(filePath, "rb").read()}, data={
-
+    response = requests.post(domain + "api/files/create", files={"file": open(filePath, "rb").read()}, data={
         "token": token,
         "collection_token":"",
         "noembed": True,
@@ -51,6 +52,7 @@ def upload(domain, filePath, token=""):
 
     })
 
-    print(response)
+    return response.json()
 
-    return response
+def deleteHandler(url):
+    return requests.get(url).json()
