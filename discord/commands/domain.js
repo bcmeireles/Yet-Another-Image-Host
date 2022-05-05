@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const fetch = require('node-fetch');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -11,7 +12,11 @@ module.exports = {
     async execute(interaction) {
         const newDomain = interaction.options.getString('newdomain');
         await fetch('http://127.0.0.1:5000/domain', {
-            method: "PUT",
+            method: 'PUT',
+            headers:{          
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
                 id: interaction.user.id,
                 domain: newDomain

@@ -15,7 +15,7 @@ class Key(Resource):
         self.parser = reqparse.RequestParser()
 
     def get(self):
-        self.parser.add_argument("id", type=int, location="form")
+        self.parser.add_argument("id", type=int, location="args")
         args = self.parser.parse_args()
 
         con = Actions()
@@ -25,8 +25,8 @@ class Key(Resource):
         return {"key": key}
 
     def put(self):
-        self.parser.add_argument("id", type=int, location="form")
-        self.parser.add_argument("key", type=str, location="form")
+        self.parser.add_argument("id", type=int, location="json")
+        self.parser.add_argument("key", type=str, location="json")
         args = self.parser.parse_args()
 
         con = Actions()
@@ -40,7 +40,7 @@ class Domain(Resource):
         self.parser = reqparse.RequestParser()
 
     def get(self):
-        self.parser.add_argument("id", type=int, location="form")
+        self.parser.add_argument("id", type=int, location="args")
         args = self.parser.parse_args()
 
         con = Actions()
@@ -50,11 +50,13 @@ class Domain(Resource):
         return {"domain": domain}
 
     def put(self):
-        self.parser.add_argument("id", type=int, location="form")
-        self.parser.add_argument("domain", type=str, location="form")
+        self.parser.add_argument("id", type=int, location="json")
+        self.parser.add_argument("domain", type=str, location="json")
         args = self.parser.parse_args()
 
         con = Actions()
+        print(args["id"])
+        print(args["domain"])
         con.editDomainDB(args["id"], args["domain"])
         con.closeDB()
 
@@ -66,7 +68,7 @@ class Upload(Resource):
 
     def post(self):
         self.parser.add_argument("file", type=werkzeug.datastructures.FileStorage, location="files")
-        self.parser.add_argument("id", type=str, location="form")
+        self.parser.add_argument("id", type=str, location="json")
         args = self.parser.parse_args()
         img = args["file"]
         id = int(args["id"])
@@ -133,7 +135,7 @@ class User(Resource):
         return {"domain": domain, "key": key}
 
     def post(self):
-        self.parser.add_argument("id", type=int, location="form")
+        self.parser.add_argument("id", type=int, location="json")
         args = self.parser.parse_args()
 
         con = Actions()
@@ -143,7 +145,7 @@ class User(Resource):
         return {"message": "Added"}
 
     def delete(self):
-        self.parser.add_argument("id", type=int, location="form")
+        self.parser.add_argument("id", type=int, location="json")
         args = self.parser.parse_args()
 
         con = Actions()
