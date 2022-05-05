@@ -4,7 +4,7 @@ import werkzeug
 import uuid
 import os
 
-from handler import uploadHandler, deleteHandler
+from handler import uploadHandler, deleteHandler, getDomains
 from db.actions import Actions
 
 app = Flask(__name__)
@@ -61,6 +61,11 @@ class Domain(Resource):
         con.closeDB()
 
         return {"message": "Updated"}
+
+class Domains(Resource):
+    def get(self):
+        return {"domains": getDomains()}
+
 
 class Upload(Resource):
     def __init__(self):
@@ -160,6 +165,7 @@ api.add_resource(Key, '/key')
 api.add_resource(Domain, '/domain')
 api.add_resource(Gallery, '/gallery/<int:id>')
 api.add_resource(User, '/user')
+api.add_resource(Domains, '/domains')
 
 
 if __name__ == '__main__':

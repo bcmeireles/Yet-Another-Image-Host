@@ -7,7 +7,9 @@ BASEURL = "https://sxcu.net/api/"
 def getAllDomains():
     return requests.get(BASEURL + "subdomains").json()
 
-def getDomains(allDomains):
+def getDomains(allDomains=None):
+    if not allDomains:
+        allDomains = getAllDomains()
     domains = []
     for domain in allDomains:
         if domain["public"] and domain["domain"].count(".") == 1 and domain["domain"] != "sxcu.net":
