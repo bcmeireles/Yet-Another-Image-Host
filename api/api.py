@@ -120,6 +120,18 @@ class User(Resource):
     def __init__(self):
         self.parser = reqparse.RequestParser()
 
+    def get(self):
+        self.parser.add_argument("id", type=int, location="args")
+        args = self.parser.parse_args()
+
+        con = Actions()
+        
+        domain, key = con.getDomainDB(args["id"]), con.getKeyDB(args["id"])
+
+        con.closeDB()
+
+        return {"domain": domain, "key": key}
+
     def post(self):
         self.parser.add_argument("id", type=int, location="form")
         args = self.parser.parse_args()

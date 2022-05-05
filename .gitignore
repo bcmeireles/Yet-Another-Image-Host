@@ -4,3 +4,8 @@
 testes.py
 testes2.py
 *.png
+images/tests.png
+images/tests.png
+node_modules/
+discord/config.json
+*.png
