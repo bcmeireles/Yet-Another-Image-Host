@@ -1,8 +1,8 @@
 const fs = require('node:fs');
-const { Client, Collection, Intents } = require('discord.js');
+const { Client, Collection } = require('discord.js');
 const { token } = require('./config.json');
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: 32767 });
 
 client.commands = new Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -20,6 +20,7 @@ client.on('interactionCreate', async interaction => {
     console.log(`${interaction.user.tag} in #${interaction.channel.name} triggered an interaction.`);
 
 	if (!interaction.isCommand()) return;
+	// if (!interaction.isChatInputCommand()) return;
 
 	const { commandName } = interaction;
 

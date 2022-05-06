@@ -141,10 +141,12 @@ class User(Resource):
 
     def post(self):
         self.parser.add_argument("id", type=int, location="json")
+        self.parser.add_argument("domain", type=str, location="json")
+        self.parser.add_argument("key", type=str, location="json")
         args = self.parser.parse_args()
 
         con = Actions()
-        con.addUserDB(args["id"])
+        con.addUserDB(args["id"], args["key"], args["domain"])
         con.closeDB()
 
         return {"message": "Added"}

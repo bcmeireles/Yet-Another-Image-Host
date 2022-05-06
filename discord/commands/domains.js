@@ -1,5 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 const fetch = require('node-fetch');
 
@@ -12,7 +12,7 @@ module.exports = {
         
         const array = res.domains;
 
-        const exampleEmbed = new MessageEmbed()
+        const exampleEmbed = new EmbedBuilder()
             .setColor('#ffffff')
             .setTitle('Yet Another Image Host')
             .setURL('https://github.com/dvntx/Yet-Another-Image-Host')
@@ -20,10 +20,8 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: 'yaih', iconURL: 'https://avatars.githubusercontent.com/u/67381633' });
 
-        for (let i = 0; i < Object.keys(array).length; i++){
-            exampleEmbed.addField(array[i], '\u200B', true)
-        }
-
+        
+            
         await interaction.reply({ embeds: [exampleEmbed] })
     },
 };
